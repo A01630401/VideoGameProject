@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy3 : MonoBehaviour
 {
-
     private GameObject followPoint;
     private Vector3 followPointPos;
     private float speed = 3.0f;
@@ -17,12 +16,12 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ZombieVariables.zombie1)
+        if (ZombieVariables.zombie3)
         {
             followPointPos = new Vector3(followPoint.transform.position.x, followPoint.transform.position.y, followPoint.transform.position.z);
 
             transform.position = Vector3.MoveTowards(transform.position, followPointPos, speed * Time.deltaTime);
         }
-        
+
     }
 }

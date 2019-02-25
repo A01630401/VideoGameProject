@@ -37,4 +37,26 @@ public class Player : MonoBehaviour
         //The wayPoint's position will now be the player's current position.
         wayPoint.transform.position = transform.position;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "WallZombie1")
+            ZombieVariables.zombie1 = true;
+        else if(other.gameObject.name == "WallZombie2")
+            ZombieVariables.zombie1 = false;
+        else if (other.gameObject.name == "WallZombie3")
+            ZombieVariables.zombie2 = true;
+        else if (other.gameObject.name == "WallZombie4")
+            ZombieVariables.zombie2 = true;
+        else if (other.gameObject.name == "WallZombie5")
+            ZombieVariables.zombie2 = false;
+        else if (other.gameObject.name == "WallZombie6")
+            ZombieVariables.zombie3 = true;
+        else if (other.gameObject.name == "WallZombie7")
+            ZombieVariables.zombie3 = false;
+        else if (other.gameObject.name == "WallZombie8")
+            ZombieVariables.zombie4 = true;
+        else if (other.gameObject.name == "WallZombie9")
+            ZombieVariables.zombie4 = false;
+    }
 }
