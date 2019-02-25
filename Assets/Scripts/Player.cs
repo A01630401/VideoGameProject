@@ -41,22 +41,22 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "WallZombie1")
-            ZombieVariables.zombie1 = true;
+            Variables.enemy1 = true;
         else if(other.gameObject.name == "WallZombie2")
-            ZombieVariables.zombie1 = false;
+            Variables.enemy1 = false;
         else if (other.gameObject.name == "WallZombie3")
-            ZombieVariables.zombie2 = true;
+            Variables.enemy2 = true;
         else if (other.gameObject.name == "WallZombie4")
-            ZombieVariables.zombie2 = true;
+            Variables.enemy2 = true;
         else if (other.gameObject.name == "WallZombie5")
-            ZombieVariables.zombie2 = false;
+            Variables.enemy2 = false;
         else if (other.gameObject.name == "WallZombie6")
-            ZombieVariables.zombie3 = true;
+            Variables.enemy3 = true;
         else if (other.gameObject.name == "WallZombie7")
-            ZombieVariables.zombie3 = false;
+            Variables.enemy3 = false;
         else if (other.gameObject.name == "WallZombie8")
-            ZombieVariables.zombie4 = true;
+            Variables.enemy4 = true;
         else if (other.gameObject.name == "WallZombie9")
-            ZombieVariables.zombie4 = false;
+            Variables.enemy4 = false;
     }
 }

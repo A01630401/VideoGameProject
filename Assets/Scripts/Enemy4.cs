@@ -16,7 +16,7 @@ public class Enemy4 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ZombieVariables.zombie4)
+        if (Variables.enemy4)
         {
             followPointPos = new Vector3(followPoint.transform.position.x, followPoint.transform.position.y, followPoint.transform.position.z);
 
