@@ -11,7 +11,7 @@ public class PlayerBullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 150, ForceMode.Impulse);
-        Destroy(gameObject, 5);
+        Destroy(gameObject, 2);
     }
 
     // Update is called once per frame
