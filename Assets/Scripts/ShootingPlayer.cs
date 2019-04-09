@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ShootingPlayer : MonoBehaviour
 {
-    public Transform cannonTip;
     public GameObject bullet;
-    
+    public GameObject camera;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +15,11 @@ public class ShootingPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.eulerAngles = camera.transform.eulerAngles;
+        
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(bullet, cannonTip);
+            Instantiate(bullet, transform);
         }
        
     }
