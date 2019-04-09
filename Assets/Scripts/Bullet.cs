@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.up * 100, ForceMode.Impulse);
+        rb.AddForce(transform.up * 10, ForceMode.Impulse);
         Destroy(gameObject, 2);
     }
 

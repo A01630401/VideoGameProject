@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShootingPlayer : MonoBehaviour
 {
     public GameObject bullet;
-    public GameObject camera;
+    public GameObject aim;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +15,7 @@ public class ShootingPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.eulerAngles = camera.transform.eulerAngles;
+        transform.eulerAngles = aim.transform.eulerAngles;
         
         if (Input.GetMouseButtonDown(0))
         {
