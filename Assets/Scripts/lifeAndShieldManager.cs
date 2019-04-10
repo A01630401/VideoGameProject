@@ -12,6 +12,7 @@ public class lifeAndShieldManager : MonoBehaviour
     private int shield;
     private int partnerLife;
     private bool whithPartner;
+    public Inventory inventory;
     
     
     // Start is called before the first frame update
@@ -112,13 +113,23 @@ public class lifeAndShieldManager : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-
+        
+        
         if (other.gameObject.layer == 13  && Input.GetKeyDown(KeyCode.E))
         {
+            IInventoryItem item = other.GetComponent<IInventoryItem>();
+            
+            if(item != null)
+            {
+                inventory.AddItem(item);
+
+            }
             Destroy(other.transform.parent.gameObject);
             medicineTaken();
         }
     }
+    
+    
 
     void UpdateTextUI()
     {

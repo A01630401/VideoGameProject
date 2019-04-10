@@ -14,6 +14,8 @@ public class CharacterControl : MonoBehaviour
     
     private CharacterController playerController;
     private bool isJumping;
+    
+    public Inventory inventory;
 
     void Start()
     {
@@ -70,5 +72,19 @@ public class CharacterControl : MonoBehaviour
         } while (!playerController.isGrounded && playerController.collisionFlags != CollisionFlags.Above);
 
         isJumping = false;
+    }
+    
+    
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        
+        IInventoryItem item = hit.collider.GetComponent<IInventoryItem>();
+        Debug.Log(hit.gameObject.name);
+        if(item != null)
+        {
+            inventory.AddItem(item);
+            Destroy(hit.gameObject);
+
+        }
     }
 } 
