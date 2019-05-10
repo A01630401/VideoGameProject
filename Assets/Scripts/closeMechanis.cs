@@ -5,12 +5,14 @@ using TMPro;
 
 public class closeMechanis : MonoBehaviour
 {
+    public static bool newBullet = false;
     public GameObject TMPText;
     private MeshRenderer textMeshRenderer;
     
     // Start is called before the first frame update
     void Start()
     {
+        newBullet = true;
         textMeshRenderer = TMPText.GetComponent<MeshRenderer>();
         textMeshRenderer.enabled = false;
         

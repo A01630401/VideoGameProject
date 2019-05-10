@@ -5,16 +5,19 @@ using UnityEngine;
 public class ShootingMechanic : MonoBehaviour
 {
     public Transform cannonTip;
-    public Transform enemyPos;
+    private Transform enemyPos;
     public GameObject bullet;
     private float speed = 3.0f;
     private Transform target;
+    public AudioSource audioS;
+    public AudioClip audioC;
 
     private float time;
     
     // Start is called before the first frame update
     void Start()
     {
+        audioS.clip = audioC;
         //enemyPos = enemy.GetComponent<Transform>();
     }
 
@@ -30,10 +33,10 @@ public class ShootingMechanic : MonoBehaviour
         Debug.Log("Shooting Mechanic: OnTriggerEnter");
         if (other.gameObject.layer == 9)
         {
-            target = other.transform;
             StartCoroutine(shooting());
         }
     }
+
 
     void OnTriggerStay(Collider other)
     {
@@ -42,8 +45,9 @@ public class ShootingMechanic : MonoBehaviour
         if(other.gameObject.layer == 9)
         {   
             target = other.transform;
-            Vector3 followPointPos = new Vector3(target.position.x, target.position.y, target.transform.position.z);
-            enemyPos.position = Vector3.MoveTowards(transform.position, followPointPos, speed * Time.deltaTime);
+            transform.LookAt(target.transform);
+            //Vector3 followPointPos = new Vector3(target.position.x, target.position.y, target.transform.position.z);
+            //transform.position = Vector3.MoveTowards(transform.position, followPointPos, speed * Time.deltaTime);
         }
     }
 
@@ -57,8 +61,8 @@ public class ShootingMechanic : MonoBehaviour
     IEnumerator shooting()
     {
         while(true)
-        {   
-            enemyPos.LookAt(target.transform);
+        {
+            audioS.Play();
             Instantiate(bullet, cannonTip);
             yield return new WaitForSeconds(1.0f);
         }

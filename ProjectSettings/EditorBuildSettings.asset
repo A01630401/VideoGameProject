@@ -5,7 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes Man/Begin.unity
+    guid: eb5f70c77eafa47edbb9522382e840c5
+  - enabled: 1
+    path: Assets/Scenes Man/Difficulty.unity
+    guid: d0bd9a7e0290446c299135684e5443c6
+  - enabled: 1
+    path: Assets/Scenes Man/FinalBossScene.unity
+    guid: eb50adfe75badbc4e888736c585777e0
+  - enabled: 1
+    path: Assets/Scenes Man/Wingame.unity
+    guid: bd407f9be1cc94102a797d4fd8875251
+  - enabled: 1
+    path: Assets/Scenes Man/Endgame.unity
+    guid: e2459d35342f84a4d8318a46b4394913
   m_configObjects: {}

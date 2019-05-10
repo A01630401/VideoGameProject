@@ -5,13 +5,18 @@ using UnityEngine;
 public class PlayerBullet : MonoBehaviour
 {
     private Rigidbody rb;
+    public AudioSource aso;
+    public AudioClip ac;
+  
 
     // Start is called before the first frame update
     void Start()
     {
+        aso.clip = ac;
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 150, ForceMode.Impulse);
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1.5f);
+        
     }
 
     // Update is called once per frame
@@ -27,6 +32,12 @@ public class PlayerBullet : MonoBehaviour
         {    
             Debug.Log("Collition on enemy layer 10");
             Destroy(collision.gameObject);
+            aso.Play();
+            Destroy(this.gameObject);
+        } else if (collision.gameObject.layer == 15) {
+            Debug.Log("collision.gameObject.layer == 15");
+            collision.gameObject.GetComponent<Boss>().dead();
+            Destroy(this.gameObject);
         }
     }
 }

@@ -7,13 +7,16 @@ public class EnemyFly : MonoBehaviour
     public GameObject[] path;
     private float threshold;
     private int current;
-    public GameObject mainchar;
+    private GameObject player;
     private bool patroling;
     public GameObject projectile;
+    public AudioSource aso;
+    public AudioClip ac;
 
     // Start is called before the first frame update
     void Start()
     {
+        aso.clip = ac;
         current = 0;
         threshold = 1;
         StartCoroutine("FlyPatrol");
@@ -53,8 +56,10 @@ public class EnemyFly : MonoBehaviour
     {
         while (true)
         {
-            transform.LookAt(mainchar.transform.position);
-            Instantiate(projectile, transform.position, transform.rotation);
+            aso.Play();
+            transform.LookAt(player.transform.position);
+            Vector3 positionForBullet = new Vector3(transform.position.x + 1, transform.position.y + 1, transform.position.z + 1);
+            Instantiate(projectile, positionForBullet, transform.rotation);
             yield return new WaitForSeconds(4);
         }
         
@@ -69,11 +74,18 @@ public class EnemyFly : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 12)
+        if (other.gameObject.layer == 9)
         {
-            StopCoroutine(FlyPatrol());
-            StopCoroutine("Shooting");
-            Destroy(this.gameObject);
+            this.player = other.gameObject;
+            activateCoroutine();
+            //StopCoroutine(FlyPatrol());
+            //StopCoroutine("Shooting");
+        }
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if (other.gameObject.layer == 9) {
+            transform.LookAt(player.transform.position);
         }
     }
 }

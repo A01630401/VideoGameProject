@@ -8,11 +8,17 @@ public class PlayerLook : MonoBehaviour
     public float mouseSensitivity;
     public float xAxisClamp;
 
-    public Transform playerBody; 
+    public Transform playerBody;
+    public AudioClip ac;
+    public AudioSource aso;
+
+    private bool flagFall;
     
     // Start is called before the first frame update
     void Start()
     {
+        flagFall = true;
+        aso.clip = ac;
         lockCursor();
         xAxisClamp = 0.0f;
     }
@@ -21,6 +27,7 @@ public class PlayerLook : MonoBehaviour
     void Update()
     {
         camaraRotation();
+        falling();
     }
     
     void lockCursor()
@@ -57,5 +64,16 @@ public class PlayerLook : MonoBehaviour
         Vector3 eulerRotation = transform.eulerAngles;
         eulerRotation.x = value;
         transform.eulerAngles = eulerRotation;
+    }
+
+    public void falling() {
+        if (transform.position.y < -3) {
+            // Cargar audio de caida
+            Debug.Log("falling");
+            if (flagFall) {
+                flagFall = false;
+                aso.Play();
+            }
+        }
     }
 }

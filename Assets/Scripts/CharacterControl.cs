@@ -8,10 +8,12 @@ using UnityEngine;
 
 public class CharacterControl : MonoBehaviour
 {
-    public float movementSpeed = 6.0f;
+    public float movementSpeed;
     public AnimationCurve jumpFallOff;
     public float jumpMultiplier;
-    
+    //public AudioSource jumpS;
+    //public AudioClip jumpCl;
+
     private CharacterController playerController;
     private bool isJumping;
     
@@ -19,6 +21,8 @@ public class CharacterControl : MonoBehaviour
 
     void Start()
     {
+        
+        //jumpS.clip = jumpCl;
         playerController = GetComponent<CharacterController>();
 
         // let the gameObject fall down
@@ -28,6 +32,14 @@ public class CharacterControl : MonoBehaviour
     void Update()
     {
         playerMove();
+        falling();
+        items();
+    }
+
+    void items() {
+        if (Input.GetKeyDown(KeyCode.E) ) {
+            Debug.Log("1111111111111");
+        }
     }
     
     void playerMove()
@@ -52,6 +64,7 @@ public class CharacterControl : MonoBehaviour
     {
         if(Input.GetKeyDown("space") && !isJumping)
         {
+            //jumpS.Play();
             isJumping = true;
             StartCoroutine(JumpEvent());
         }
@@ -79,11 +92,27 @@ public class CharacterControl : MonoBehaviour
     {
         
         IInventoryItem item = hit.collider.GetComponent<IInventoryItem>();
-        Debug.Log(hit.gameObject.name);
+        //Debug.Log(hit.gameObject.name);
         if(item != null)
         {
             inventory.AddItem(item);
             Destroy(hit.gameObject);
+
+        }
+    }
+
+    public void falling() {
+        
+
+        if (transform.position.y < -50) {
+            // Cargar escena de perdiste;
+            GameObject aux = GameObject.Find("SceneMan");
+
+            ChangeScene auxScenemanager = aux.GetComponent<ChangeScene>();
+            Destroy(aux);
+            auxScenemanager.loadsScene(4);
+            
+            
 
         }
     }

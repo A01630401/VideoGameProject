@@ -19,9 +19,9 @@ TagManager:
   - EnemyBullet
   - PlayerBullet
   - ObjectLife
-  - 
-  - 
-  - 
+  - Dog
+  - Boss
+  - Shield
   - 
   - 
   - 

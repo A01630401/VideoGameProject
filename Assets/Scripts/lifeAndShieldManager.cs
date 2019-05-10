@@ -13,11 +13,20 @@ public class lifeAndShieldManager : MonoBehaviour
     private int partnerLife;
     private bool whithPartner;
     public Inventory inventory;
-    
-    
+
+    public Color damageColor;
+    public Color healthColor;
+    public Image damageImage;
+    public int damageFlashSpeed;
+    private bool damageFlag;
+
+    public AudioSource aso;
+    public AudioClip ac;
+
     // Start is called before the first frame update
     void Start()
     {
+        aso.clip = ac;
         shield = 0;
         life = 100;
         partnerLife = 0;
@@ -27,6 +36,7 @@ public class lifeAndShieldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        damage();
         if (partner != null) {
             whithPartner = true;
         }
@@ -34,6 +44,15 @@ public class lifeAndShieldManager : MonoBehaviour
         {
             whithPartner = false;
         }
+
+        if (life <= 0) {
+            GameObject aux = GameObject.Find("SceneMan");
+            ChangeScene auxScenemanager = aux.GetComponent<ChangeScene>();
+            Destroy(aux);
+            auxScenemanager.loadsScene(4);
+        }
+
+        checkingInvetory();
     }
 
 
@@ -48,16 +67,7 @@ public class lifeAndShieldManager : MonoBehaviour
             life = 100;
         }
         
-        
-        if(shield + 20 < 80)
-        {
-            shield += 20;
-        }
-        else
-        {
-            shield = 80;
-        }
-        
+
         if (whithPartner)
         {
             if(partnerLife + 10 < 50)
@@ -77,27 +87,49 @@ public class lifeAndShieldManager : MonoBehaviour
         }
 
     }
-    
+
+    private void shieldTaken() {
+        if(shield + 20 < 80)
+        {
+            shield += 20;
+        }
+        else {
+            shield = 80;
+        }
+
+        if (whithPartner) {
+            UpdateTextUIWithPartner();
+        }
+        else {
+            UpdateTextUI();
+        }
+    }
+
+
 
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 10 || collision.gameObject.layer == 11)
         {
+            Debug.Log("Colision");
             if (shield > 0)
             {
                 shield-= 3;
                 life--;
+                damageFlag = true;
             }
             else
             {
                 life-=5;
+                damageFlag = true;
             }
             
             if (shield < 0)
             {
                 shield = 0;
             }
+            aso.Play();
         }
        
         if (!whithPartner)
@@ -108,6 +140,40 @@ public class lifeAndShieldManager : MonoBehaviour
         {
             UpdateTextUIWithPartner();
         }
+
+        
+        
+    }
+
+
+    // E - medicina R - shield T - mascota Y - Bullet U - Buller pro
+
+    private void checkingInvetory() {
+        if (Input.GetKeyDown(KeyCode.E) && inventory.medicineflag) {
+            inventory.useMedicine();
+            medicineTaken();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && inventory.shieldflag) {
+            inventory.useShield();
+            // shield taken
+            shieldTaken();
+        }
+
+        if (Input.GetKeyDown(KeyCode.T) && inventory.dogflag) {
+            inventory.useDog();
+            // shield taken
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y) && inventory.bullet) {
+            inventory.useBullet();
+            // shield taken
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y) && inventory.bulletPro) {
+            inventory.useBulletPro();
+            // shield taken
+        }
     }
 
 
@@ -115,21 +181,29 @@ public class lifeAndShieldManager : MonoBehaviour
     {
         
         
-        if (other.gameObject.layer == 13  && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.layer == 13  && Input.GetKeyDown(KeyCode.Z))
         {
-            IInventoryItem item = other.GetComponent<IInventoryItem>();
-            
-            if(item != null)
-            {
-                inventory.AddItem(item);
-
-            }
+            inventory.takeMedicine();
             Destroy(other.transform.parent.gameObject);
-            medicineTaken();
+        }
+
+        if (other.gameObject.layer == 16 && Input.GetKeyDown(KeyCode.Z)) {
+            inventory.takeShield();
+            Destroy(other.transform.parent.gameObject);
         }
     }
-    
-    
+
+
+    public void damage() {
+        if (damageFlag) {
+            damageImage.color = healthColor;
+        }
+        else {
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, damageFlashSpeed * Time.deltaTime);
+        }
+
+        damageFlag = false;
+    }
 
     void UpdateTextUI()
     {
